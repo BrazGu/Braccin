@@ -2,10 +2,13 @@ package com.braccin.calc.controller;
 
 import com.braccin.calc.model.TipoDocumento;
 import com.braccin.calc.service.ValidadorService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-@RestController
-@RequestMapping("/api/validar")
+@Controller
+@RequestMapping("/braccin")
 public class ValidadorController {
 
     private final ValidadorService validadorService;
@@ -14,13 +17,18 @@ public class ValidadorController {
         this.validadorService = validadorService;
     }
 
-    @GetMapping("/{tipo}/{documento}")
+    @GetMapping("/home")
+    public String showForm() {
+        return "index";
+    }
+
+    @GetMapping("/validar/{tipo}/{documento}")
     public boolean validar(@PathVariable String tipo, @PathVariable String documento) {
         TipoDocumento tipoDoc;
         try {
             tipoDoc = TipoDocumento.valueOf(tipo.toUpperCase());
         } catch (IllegalArgumentException e) {
-            return false; // Tipo inválido
+            return false;
         }
 
         return validadorService.validarDocumento(documento, tipoDoc);

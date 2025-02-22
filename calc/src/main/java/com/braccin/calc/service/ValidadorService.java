@@ -12,7 +12,7 @@ public class ValidadorService {
         
         for (char c : documento.toCharArray()) {
             if (!Character.isDigit(c) && !(tipo == TipoDocumento.RG && c == 'X')) {
-                return false; // Caracteres inválidos
+                return false;
             }
             
             switch (estado) {

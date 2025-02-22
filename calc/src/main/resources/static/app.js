@@ -1,26 +1,22 @@
-document.getElementById('validarBtn').addEventListener('click', function () {
-    const tipo = document.getElementById('tipo').value;
-    const documento = document.getElementById('documento').value.trim();
+$(document).ready(function() {
+    $('#validarBtn').click(function() {
+        var tipo = $('#tipo').val();
+        var documento = $('#documento').val();
 
-    if (!documento) {
-        alert("Por favor, insira um documento.");
-        return;
-    }
-
-    fetch(`http://localhost:8080/api/validar/${tipo}/${documento}`)
-        .then(response => response.json())
-        .then(isValido => {
-            const resultadoDiv = document.getElementById('resultado');
-            if (isValido) {
-                resultadoDiv.textContent = `Documento ${documento} é válido.`;
-                resultadoDiv.style.color = 'green';
-            } else {
-                resultadoDiv.textContent = `Documento ${documento} é inválido.`;
-                resultadoDiv.style.color = 'red';
+        $.ajax({
+            url: '/braccin/validar/' + tipo + '/' + documento,
+            method: 'GET',
+            success: function(response) {
+                if (response) {
+                    $('#resultado').html('Documento válido!');
+                } else {
+                    $('#resultado').html('Documento inválido!');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Erro ao validar o documento:', xhr.responseText);
+                $('#resultado').html('Erro ao validar o documento');
             }
-        })
-        .catch(error => {
-            console.error("Erro na requisição", error);
-            alert("Erro ao validar documento.");
         });
+    });
 });
