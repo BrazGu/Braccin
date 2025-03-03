@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 @RequestMapping("/braccin")
@@ -21,16 +22,17 @@ public class ValidadorController {
     public String showForm() {
         return "index";
     }
-
+    
     @GetMapping("/validar/{tipo}/{documento}")
-    public boolean validar(@PathVariable String tipo, @PathVariable String documento) {
+    public ResponseEntity<Boolean> validar(@PathVariable String tipo, @PathVariable String documento) {
         TipoDocumento tipoDoc;
         try {
             tipoDoc = TipoDocumento.valueOf(tipo.toUpperCase());
         } catch (IllegalArgumentException e) {
-            return false;
+            return ResponseEntity.badRequest().body(false); // Tipo inválido
         }
 
-        return validadorService.validarDocumento(documento, tipoDoc);
+        boolean isValid = validadorService.validarDocumento(documento, tipoDoc);
+        return ResponseEntity.ok(isValid);
     }
 }
