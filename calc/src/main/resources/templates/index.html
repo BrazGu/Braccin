@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de CPF e RG</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Validador de CPF e RG</h1>
+        
+        <label for="tipo">Tipo de Documento:</label>
+        <select id="tipo" name="tipo">
+            <option value="CPF">CPF</option>
+            <option value="RG">RG</option>
+        </select>
+
+        <label for="documento">Digite o Documento:</label>
+        <input type="text" id="documento" placeholder="Digite o CPF ou RG" />
+
+        <button id="validarBtn">Validar</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/app.js"></script>
+    
+</body>
+</html>
