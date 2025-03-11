@@ -17,7 +17,6 @@ public class ValidadorService {
         }
         return false;
     }
-
     private boolean validarCPF(String cpf) {
         boolean hasDot = cpf.contains(".");
         boolean valid;
